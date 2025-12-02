@@ -324,6 +324,9 @@ function handleJoined(message) {
     startBtn.style.display = 'block';
   }
 
+  document.querySelector(".mobile-tabs").style.display = "flex";
+  document.getElementById("mobile-panel").style.display = "none";
+
   addActionLog('System', 'You joined the room');
 }
 
@@ -340,13 +343,14 @@ function updatePlayersList(players) {
 
     return `
       <div class="player-item">
-        <span>${player.nickname}</span>
-        ${badges.join('')}
+        <div class="player-info">
+            <span class="player-name">${player.nickname}</span>
+            <div class="player-badges">${badges.join('')}</div>
+        </div>
       </div>
     `;
   }).join('');
 
-  // Update host status
   const hostPlayer = players.find(p => p.isHost);
   if (hostPlayer) {
     isHost = hostPlayer.id === myPlayerId;
@@ -354,6 +358,7 @@ function updatePlayersList(players) {
     playerRole.textContent = isHost ? 'Host' : 'Player';
   }
 }
+
 
 function addChatMessage(nickname, message) {
   const messageDiv = document.createElement('div');
@@ -564,18 +569,18 @@ function updatePlayersListWithChips(players) {
     return `
       <div class="player-item ${player.isCurrentPlayer ? 'current-turn' : ''}">
         <div class="player-info">
-          <span class="player-name">${player.nickname}</span>
-          ${badges.join('')}
+            <span class="player-name">${player.nickname}</span>
+            <div class="player-badges">${badges.join('')}</div>
         </div>
+
         <div class="player-chips">
-          <span class="chips-label">Chips:</span> ${player.chips}
-          ${player.bet > 0 ? `<span class="bet-label">Bet:</span> ${player.bet}` : ''}
+            <span class="chips-label">Chips:</span> ${player.chips}
+            ${player.bet > 0 ? `<span class="bet-label">Bet:</span> ${player.bet}` : ''}
         </div>
       </div>
     `;
   }).join('');
 
-  // Update host status
   const hostPlayer = players.find(p => p.isHost);
   if (hostPlayer) {
     isHost = hostPlayer.id === myPlayerId;
@@ -583,6 +588,7 @@ function updatePlayersListWithChips(players) {
     playerRole.textContent = isHost ? 'Host' : 'Player';
   }
 }
+
 
 function handlePlayerAction(message) {
   addActionLog('Action', message.message);
@@ -683,63 +689,3 @@ function resetToLogin() {
 
   ws = null;
 }
-
-const mobileButtons = document.querySelectorAll(".mobile-tabs button");
-const mobilePanel = document.getElementById("mobile-panel");
-
-let currentActiveTab = null;
-
-mobileButtons.forEach(btn => {
-    btn.addEventListener("click", () => {
-
-        const tab = btn.dataset.tab;
-
-        // If clicking the same tab = close it
-        if (btn.classList.contains("active")) {
-            closeMobilePanel();
-            return;
-        }
-
-        // Switch active tab
-        mobileButtons.forEach(b => b.classList.remove("active"));
-        btn.classList.add("active");
-        currentActiveTab = tab;
-
-        openMobilePanel(tab);
-    });
-});
-
-function openMobilePanel(tab) {
-    mobilePanel.style.display = "block";
-
-    // Move the actual DOM into mobile panel
-    if (tab === "chat") {
-        mobilePanel.innerHTML = "";
-        mobilePanel.appendChild(document.getElementById("chat-container"));
-    }
-
-    if (tab === "actions") {
-        mobilePanel.innerHTML = "";
-        mobilePanel.appendChild(document.getElementById("actions-container"));
-    }
-
-    if (tab === "players") {
-        mobilePanel.innerHTML = "";
-        mobilePanel.appendChild(document.getElementById("players-container"));
-    }
-}
-
-function closeMobilePanel() {
-    mobileButtons.forEach(b => b.classList.remove("active"));
-    mobilePanel.style.display = "none";
-    mobilePanel.innerHTML = "";
-    currentActiveTab = null;
-
-    // Put components back to desktop layout
-    document.querySelector(".right-panel").appendChild(document.getElementById("chat-container"));
-    document.querySelector(".right-panel").appendChild(document.getElementById("actions-container"));
-    document.querySelector(".left-panel").appendChild(document.getElementById("players-container"));
-}
-
-// Tap poker table → close mobile panel
-document.querySelector(".center-panel")?.addEventListener("click", closeMobilePanel);
