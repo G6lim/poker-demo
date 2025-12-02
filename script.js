@@ -684,46 +684,53 @@ function resetToLogin() {
   ws = null;
 }
 
+// Mobile tabs toggle logic
+const mobileButtons = document.querySelectorAll(".mobile-tabs button");
+const mobilePanel = document.getElementById("mobile-panel");
 
-document.querySelectorAll(".mobile-tabs button").forEach(btn => {
+mobileButtons.forEach(btn => {
     btn.addEventListener("click", () => {
-        document.querySelectorAll(".mobile-tabs button").forEach(b => b.classList.remove("active"));
-        btn.classList.add("active");
 
-        const panel = document.getElementById("mobile-panel");
-        panel.style.display = "block";
+        // If clicking active button → close
+        if (btn.classList.contains("active")) {
+            btn.classList.remove("active");
+            mobilePanel.style.display = "none";
+            return;
+        }
+
+        // Otherwise open panel
+        mobileButtons.forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        mobilePanel.style.display = "block";
 
         const tab = btn.dataset.tab;
 
         if (tab === "chat") {
-            panel.innerHTML = document.getElementById("chat-messages").innerHTML;
+            mobilePanel.innerHTML = document.getElementById("chat-messages").innerHTML;
         }
         if (tab === "actions") {
-            panel.innerHTML = document.getElementById("action-log").innerHTML;
+            mobilePanel.innerHTML = document.getElementById("action-log").innerHTML;
         }
         if (tab === "players") {
-            panel.innerHTML = document.getElementById("players-list").innerHTML;
+            mobilePanel.innerHTML = document.getElementById("players-list").innerHTML;
         }
     });
 });
 
-
-setInterval(() => {
+// Clicking on the poker table closes panel
+document.querySelector(".center-panel").addEventListener("click", () => {
     const active = document.querySelector(".mobile-tabs button.active");
-    if (!active) return;
+    if (active) active.classList.remove("active");
+    mobilePanel.style.display = "none";
+});
 
-    const tab = active.dataset.tab;
-    const panel = document.getElementById("mobile-panel");
 
-    if (panel.style.display !== "block") return;
+fetch("version.json")
+  .then(r => r.json())
+  .then(server => {
+    if (server.version !== localStorage.getItem("version")) {
+      localStorage.setItem("version", server.version);
+      location.reload(true);
+    }
+  });
 
-    if (tab === "chat") {
-        panel.innerHTML = document.getElementById("chat-messages").innerHTML;
-    }
-    if (tab === "actions") {
-        panel.innerHTML = document.getElementById("action-log").innerHTML;
-    }
-    if (tab === "players") {
-        panel.innerHTML = document.getElementById("players-list").innerHTML;
-    }
-}, 800);
