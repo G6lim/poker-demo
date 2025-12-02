@@ -683,3 +683,47 @@ function resetToLogin() {
 
   ws = null;
 }
+
+
+document.querySelectorAll(".mobile-tabs button").forEach(btn => {
+    btn.addEventListener("click", () => {
+        document.querySelectorAll(".mobile-tabs button").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+
+        const panel = document.getElementById("mobile-panel");
+        panel.style.display = "block";
+
+        const tab = btn.dataset.tab;
+
+        if (tab === "chat") {
+            panel.innerHTML = document.getElementById("chat-messages").innerHTML;
+        }
+        if (tab === "actions") {
+            panel.innerHTML = document.getElementById("action-log").innerHTML;
+        }
+        if (tab === "players") {
+            panel.innerHTML = document.getElementById("players-list").innerHTML;
+        }
+    });
+});
+
+
+setInterval(() => {
+    const active = document.querySelector(".mobile-tabs button.active");
+    if (!active) return;
+
+    const tab = active.dataset.tab;
+    const panel = document.getElementById("mobile-panel");
+
+    if (panel.style.display !== "block") return;
+
+    if (tab === "chat") {
+        panel.innerHTML = document.getElementById("chat-messages").innerHTML;
+    }
+    if (tab === "actions") {
+        panel.innerHTML = document.getElementById("action-log").innerHTML;
+    }
+    if (tab === "players") {
+        panel.innerHTML = document.getElementById("players-list").innerHTML;
+    }
+}, 800);

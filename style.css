@@ -911,3 +911,68 @@ h3 {
         min-width: 100%;
     }
 }
+
+@media (max-width: 768px) {
+    .game-layout {
+       flex-direction: column;
+   }
+
+   .left-panel {
+       order: 2;
+       width: 100%;
+   }
+
+   .center-panel {
+       order: 1;
+       width: 100%;
+   }
+
+    .right-panel {
+        display: none;
+    }
+
+    .card-placeholder {
+        width: 40px;
+        height: 60px;
+        font-size: 20px;
+    }
+}
+
+.mobile-tabs {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    background: #111;
+    border-top: 2px solid #c00;
+    z-index: 999;
+}
+
+.mobile-tabs button {
+    flex: 1;
+    padding: 12px;
+    background: #111;
+    color: #eee;
+    border: none;
+    font-size: 16px;
+}
+
+.mobile-tabs button.active {
+    background: #c00;
+    color: #fff;
+}
+
+.mobile-panel {
+    position: fixed;
+    bottom: 50px;
+    left: 0;
+    width: 100%;
+    height: 40%;
+    background: #222;
+    border-top: 2px solid #c00;
+    padding: 10px;
+    overflow-y: auto;
+    display: none;
+    z-index: 998;
+}
