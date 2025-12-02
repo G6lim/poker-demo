@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Texas Hold'em Poker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Texas Hold'em Poker</h1>
+
+        <!-- Login Section -->
+        <div id="login-section" class="login-section">
+            <h2>Join a Game</h2>
+            <div class="input-group">
+                <input type="text" id="nickname-input" placeholder="Enter your nickname" maxlength="20">
+            </div>
+            <div class="input-group">
+                <input type="text" id="room-input" placeholder="Enter room ID" maxlength="20">
+            </div>
+            <button id="join-btn" class="btn btn-primary">Join Room</button>
+        </div>
+
+        <!-- Game Section (hidden initially) -->
+        <div id="game-section" class="game-section" style="display: none;">
+            <!-- Status Bar -->
+            <div class="status-bar">
+                <div class="status-item">
+                    <span class="label">Room:</span>
+                    <span id="room-id" class="value">-</span>
+                </div>
+                <div class="status-item">
+                    <span class="label">Nickname:</span>
+                    <span id="player-nickname" class="value">-</span>
+                </div>
+                <div class="status-item">
+                    <span class="label">Role:</span>
+                    <span id="player-role" class="value">-</span>
+                </div>
+            </div>
+
+            <!-- Main Game Layout -->
+            <div class="game-layout">
+                <!-- Left Panel: Players -->
+                <div class="left-panel">
+                    <button id="start-btn" class="btn btn-success" style="display: none;">Start Game</button>
+                    <h3>Players</h3>
+                    <div id="players-list" class="players-list">
+                        <p class="empty-message">No players</p>
+                    </div>
+                </div>
+
+                <!-- Center Panel: Poker Table -->
+                <div class="center-panel">
+                    <div id="poker-table" class="poker-table">
+                        <h3>Community Cards</h3>
+                        <div id="community-cards" class="community-cards">
+                            <div class="card-placeholder">?</div>
+                            <div class="card-placeholder">?</div>
+                            <div class="card-placeholder">?</div>
+                            <div class="card-placeholder">?</div>
+                            <div class="card-placeholder">?</div>
+                        </div>
+
+                        <h3>Your Hand</h3>
+                        <div id="hole-cards" class="hole-cards">
+                            <div class="card-placeholder">?</div>
+                            <div class="card-placeholder">?</div>
+                        </div>
+
+                        <div id="game-status" class="game-status">
+                            Waiting for game to start...
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div id="action-panel" class="action-panel" style="display: none;">
+                            <div class="action-info">
+                                <div class="pot-info">
+                                    <span class="label">Pot:</span>
+                                    <span id="pot-amount" class="value">0</span>
+                                </div>
+                                <div class="bet-info">
+                                    <span class="label">Current Bet:</span>
+                                    <span id="current-bet" class="value">0</span>
+                                </div>
+                                <div class="chips-info">
+                                    <span class="label">Your Chips:</span>
+                                    <span id="your-chips" class="value">1000</span>
+                                </div>
+                                <div class="timer-info">
+                                    <span class="label">Time:</span>
+                                    <span id="timer-display" class="value timer-countdown">10</span>
+                                </div>
+                            </div>
+                            <div class="action-buttons">
+                                <button id="fold-btn" class="action-btn btn-fold">Fold</button>
+                                <button id="check-btn" class="action-btn btn-check">Check</button>
+                                <button id="call-btn" class="action-btn btn-call">Call <span id="call-amount">0</span></button>
+                                <button id="raise-btn" class="action-btn btn-raise">Raise</button>
+                                <button id="allin-btn" class="action-btn btn-allin">All-In</button>
+                            </div>
+                            <div id="raise-controls" class="raise-controls" style="display: none;">
+                                <div class="chip-buttons">
+                                    <button class="chip-btn" data-value="5">5</button>
+                                    <button class="chip-btn" data-value="25">25</button>
+                                    <button class="chip-btn" data-value="50">50</button>
+                                    <button class="chip-btn" data-value="100">100</button>
+                                    <button class="chip-btn" data-value="500">500</button>
+                                </div>
+                                <div class="raise-amount-display">
+                                    <span class="label">Total Raise:</span>
+                                    <span id="raise-total" class="value">0</span>
+                                </div>
+                                <div class="raise-actions">
+                                    <button id="raise-reset-btn" class="btn btn-small btn-reset">Reset</button>
+                                    <button id="raise-confirm-btn" class="btn btn-small btn-confirm">Confirm</button>
+                                    <button id="raise-cancel-btn" class="btn btn-small btn-cancel">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Winner Section -->
+                    <div id="winner-section" class="winner-section" style="display: none;">
+                        <h2>🏆 Winner! 🏆</h2>
+                        <div id="winner-info"></div>
+                        <div class="pot-won">
+                            <span class="label">Pot Won:</span>
+                            <span id="pot-won-amount" class="value">0</span>
+                        </div>
+                        <h3 class="all-hands-title">All Players' Hands</h3>
+                        <div id="winner-all-hands" class="winner-all-hands"></div>
+                    </div>
+                </div>
+
+                <!-- Right Panel: Chat & Actions -->
+                <div class="right-panel">
+                    <h3>Chat</h3>
+                    <div id="chat-messages" class="chat-messages"></div>
+                    <div class="chat-input-container">
+                        <input type="text" id="chat-input" placeholder="Type a message..." maxlength="200">
+                        <button id="send-chat-btn" class="btn btn-small">Send</button>
+                    </div>
+
+                    <h3 style="margin-top: 20px;">Actions</h3>
+                    <div id="action-log" class="action-log"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
