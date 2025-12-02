@@ -160,6 +160,7 @@ h3 {
 }
 
 #start-btn {
+    margin-top: 15px;
     margin-bottom: 15px;
 }
 
@@ -918,8 +919,7 @@ h3 {
    }
 
    .left-panel {
-       order: 2;
-       width: 100%;
+       display: none;
    }
 
    .center-panel {

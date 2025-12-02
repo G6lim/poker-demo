@@ -38,7 +38,8 @@
         </div>
 
         <!-- Game Section (hidden initially) -->
-        <div id="game-section" class="game-section" style="display: none;">
+        <div id="game-section" class="game-section" style="display:none;">
+
             <!-- Status Bar -->
             <div class="status-bar">
                 <div class="status-item">
@@ -55,20 +56,22 @@
                 </div>
             </div>
 
-            <!-- Main Game Layout -->
             <div class="game-layout">
-                <!-- Left Panel: Players -->
+
+                <!-- LEFT PANEL -->
                 <div class="left-panel">
-                    <button id="start-btn" class="btn btn-success" style="display: none;">Start Game</button>
-                    <h3>Players</h3>
-                    <div id="players-list" class="players-list">
-                        <p class="empty-message">No players</p>
+                    <div id="players-container" class="mobile-section">
+                        <h3>Players</h3>
+                        <div id="players-list" class="players-list">
+                            <p class="empty-message">No players</p>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Center Panel: Poker Table -->
+                <!-- CENTER PANEL -->
                 <div class="center-panel">
                     <div id="poker-table" class="poker-table">
+
                         <h3>Community Cards</h3>
                         <div id="community-cards" class="community-cards">
                             <div class="card-placeholder">?</div>
@@ -84,30 +87,19 @@
                             <div class="card-placeholder">?</div>
                         </div>
 
-                        <div id="game-status" class="game-status">
-                            Waiting for game to start...
-                        </div>
+                        <div id="game-status" class="game-status">Waiting for game to start...</div>
 
-                        <!-- Action Buttons -->
+                        <button id="start-btn" class="btn btn-success" style="display:none;">Start Game</button>
+
+                        <!-- Action Panel -->
                         <div id="action-panel" class="action-panel" style="display: none;">
                             <div class="action-info">
-                                <div class="pot-info">
-                                    <span class="label">Pot:</span>
-                                    <span id="pot-amount" class="value">0</span>
-                                </div>
-                                <div class="bet-info">
-                                    <span class="label">Current Bet:</span>
-                                    <span id="current-bet" class="value">0</span>
-                                </div>
-                                <div class="chips-info">
-                                    <span class="label">Your Chips:</span>
-                                    <span id="your-chips" class="value">1000</span>
-                                </div>
-                                <div class="timer-info">
-                                    <span class="label">Time:</span>
-                                    <span id="timer-display" class="value timer-countdown">10</span>
-                                </div>
+                                <div class="pot-info"><span class="label">Pot:</span><span id="pot-amount">0</span></div>
+                                <div class="bet-info"><span class="label">Current Bet:</span><span id="current-bet">0</span></div>
+                                <div class="chips-info"><span class="label">Your Chips:</span><span id="your-chips">1000</span></div>
+                                <div class="timer-info"><span class="label">Time:</span><span id="timer-display" class="timer-countdown">10</span></div>
                             </div>
+
                             <div class="action-buttons">
                                 <button id="fold-btn" class="action-btn btn-fold">Fold</button>
                                 <button id="check-btn" class="action-btn btn-check">Check</button>
@@ -115,7 +107,8 @@
                                 <button id="raise-btn" class="action-btn btn-raise">Raise</button>
                                 <button id="allin-btn" class="action-btn btn-allin">All-In</button>
                             </div>
-                            <div id="raise-controls" class="raise-controls" style="display: none;">
+
+                            <div id="raise-controls" class="raise-controls" style="display:none;">
                                 <div class="chip-buttons">
                                     <button class="chip-btn" data-value="5">5</button>
                                     <button class="chip-btn" data-value="25">25</button>
@@ -123,10 +116,11 @@
                                     <button class="chip-btn" data-value="100">100</button>
                                     <button class="chip-btn" data-value="500">500</button>
                                 </div>
+
                                 <div class="raise-amount-display">
-                                    <span class="label">Total Raise:</span>
-                                    <span id="raise-total" class="value">0</span>
+                                    <span class="label">Total Raise:</span> <span id="raise-total">0</span>
                                 </div>
+
                                 <div class="raise-actions">
                                     <button id="raise-reset-btn" class="btn btn-small btn-reset">Reset</button>
                                     <button id="raise-confirm-btn" class="btn btn-small btn-confirm">Confirm</button>
@@ -136,33 +130,39 @@
                         </div>
                     </div>
 
-                    <!-- Winner Section -->
-                    <div id="winner-section" class="winner-section" style="display: none;">
+                    <!-- WINNER SECTION -->
+                    <div id="winner-section" class="winner-section" style="display:none;">
                         <h2>🏆 Winner! 🏆</h2>
                         <div id="winner-info"></div>
-                        <div class="pot-won">
-                            <span class="label">Pot Won:</span>
-                            <span id="pot-won-amount" class="value">0</span>
-                        </div>
+                        <div class="pot-won"><span class="label">Pot Won:</span> <span id="pot-won-amount">0</span></div>
                         <h3 class="all-hands-title">All Players' Hands</h3>
-                        <div id="winner-all-hands" class="winner-all-hands"></div>
+                        <div id="winner-all-hands"></div>
                     </div>
                 </div>
 
-                <!-- Right Panel: Chat & Actions -->
+                <!-- RIGHT PANEL -->
+
                 <div class="right-panel">
-                    <h3>Chat</h3>
-                    <div id="chat-messages" class="chat-messages"></div>
-                    <div class="chat-input-container">
-                        <input type="text" id="chat-input" placeholder="Type a message..." maxlength="200">
-                        <button id="send-chat-btn" class="btn btn-small">Send</button>
+
+                    <div id="chat-container" class="mobile-section">
+                        <h3>Chat</h3>
+                        <div id="chat-messages" class="chat-messages"></div>
+                        <div class="chat-input-container">
+                            <input type="text" id="chat-input" placeholder="Type a message..." maxlength="200">
+                            <button id="send-chat-btn" class="btn btn-small">Send</button>
+                        </div>
                     </div>
 
-                    <h3 style="margin-top: 20px;">Actions</h3>
-                    <div id="action-log" class="action-log"></div>
+                    <div id="actions-container" class="mobile-section">
+                        <h3>Actions</h3>
+                        <div id="action-log" class="action-log"></div>
+                    </div>
+
                 </div>
+
             </div>
         </div>
+
     </div>
 
     <div class="mobile-tabs">

@@ -684,43 +684,62 @@ function resetToLogin() {
   ws = null;
 }
 
-// Mobile tabs toggle logic
 const mobileButtons = document.querySelectorAll(".mobile-tabs button");
 const mobilePanel = document.getElementById("mobile-panel");
+
+let currentActiveTab = null;
 
 mobileButtons.forEach(btn => {
     btn.addEventListener("click", () => {
 
-        // If clicking active button → close
+        const tab = btn.dataset.tab;
+
+        // If clicking the same tab = close it
         if (btn.classList.contains("active")) {
-            btn.classList.remove("active");
-            mobilePanel.style.display = "none";
+            closeMobilePanel();
             return;
         }
 
-        // Otherwise open panel
+        // Switch active tab
         mobileButtons.forEach(b => b.classList.remove("active"));
         btn.classList.add("active");
-        mobilePanel.style.display = "block";
+        currentActiveTab = tab;
 
-        const tab = btn.dataset.tab;
-
-        if (tab === "chat") {
-            mobilePanel.innerHTML = document.getElementById("chat-messages").innerHTML;
-        }
-        if (tab === "actions") {
-            mobilePanel.innerHTML = document.getElementById("action-log").innerHTML;
-        }
-        if (tab === "players") {
-            mobilePanel.innerHTML = document.getElementById("players-list").innerHTML;
-        }
+        openMobilePanel(tab);
     });
 });
 
-// Clicking on the poker table closes panel
-document.querySelector(".center-panel").addEventListener("click", () => {
-    const active = document.querySelector(".mobile-tabs button.active");
-    if (active) active.classList.remove("active");
-    mobilePanel.style.display = "none";
-});
+function openMobilePanel(tab) {
+    mobilePanel.style.display = "block";
 
+    // Move the actual DOM into mobile panel
+    if (tab === "chat") {
+        mobilePanel.innerHTML = "";
+        mobilePanel.appendChild(document.getElementById("chat-container"));
+    }
+
+    if (tab === "actions") {
+        mobilePanel.innerHTML = "";
+        mobilePanel.appendChild(document.getElementById("actions-container"));
+    }
+
+    if (tab === "players") {
+        mobilePanel.innerHTML = "";
+        mobilePanel.appendChild(document.getElementById("players-container"));
+    }
+}
+
+function closeMobilePanel() {
+    mobileButtons.forEach(b => b.classList.remove("active"));
+    mobilePanel.style.display = "none";
+    mobilePanel.innerHTML = "";
+    currentActiveTab = null;
+
+    // Put components back to desktop layout
+    document.querySelector(".right-panel").appendChild(document.getElementById("chat-container"));
+    document.querySelector(".right-panel").appendChild(document.getElementById("actions-container"));
+    document.querySelector(".left-panel").appendChild(document.getElementById("players-container"));
+}
+
+// Tap poker table → close mobile panel
+document.querySelector(".center-panel")?.addEventListener("click", closeMobilePanel);
