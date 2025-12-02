@@ -724,13 +724,3 @@ document.querySelector(".center-panel").addEventListener("click", () => {
     mobilePanel.style.display = "none";
 });
 
-
-fetch("version.json")
-  .then(r => r.json())
-  .then(server => {
-    if (server.version !== localStorage.getItem("version")) {
-      localStorage.setItem("version", server.version);
-      location.reload(true);
-    }
-  });
-
