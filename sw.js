@@ -1,4 +1,4 @@
-const CACHE_NAME = "poker-cache-v3";  // ← 每次更新改这里
+const CACHE_NAME = "poker-cache-v4";  // ← 每次更新改这里
 
 const ASSETS = [
   "./",
